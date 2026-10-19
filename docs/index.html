@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f1">
+  <title>γ₀: A Generalist Policy for Multi-Embodiment Motion Control</title>
+  <meta name="description" content="Gamma Zero explores one shared reinforcement-learning policy for robots with radically different embodiments.">
+  <link rel="canonical" href="https://gamma-zero.com/">
+  <link rel="preconnect" href="https://assets.gamma-zero.com">
+  <link rel="preload" as="image" href="assets/hero-fleet-poster.webp" fetchpriority="high">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gamma-zero.com/">
+  <meta property="og:title" content="γ₀: A Generalist Policy for Multi-Embodiment Motion Control">
+  <meta property="og:description" content="One shared reinforcement-learning policy for robots with radically different embodiments.">
+  <meta property="og:image" content="https://gamma-zero.com/assets/hero-fleet-poster.jpg">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="900">
+  <meta property="og:image:alt" content="Unitree G1, Unitree Go2 and Silver Badger walking together outdoors">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="γ₀: A Generalist Policy for Multi-Embodiment Motion Control">
+  <meta name="twitter:description" content="One shared reinforcement-learning policy for robots with radically different embodiments.">
+  <meta name="twitter:image" content="https://gamma-zero.com/assets/hero-fleet-poster.jpg">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VY2SZQK71K"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-VY2SZQK71K');
+  </script>
+  <link rel="icon" href="favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+  <link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=20261019-editorial-1">
+  <script src="site.js?v=20261019-editorial-1" defer></script>
+  <script src="gallery.js?v=20261019-editorial-1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-brand" href="#top" aria-label="Gamma Zero home"><span class="gamma-mark" aria-hidden="true"><span class="gamma-letter">γ</span><sub>0</sub></span><span class="brand-name">GAMMA ZERO</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu <span aria-hidden="true">＋</span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="#overview">Overview</a>
+        <a href="#methodology">Research</a>
+        <a href="#robots">The collection</a>
+        <a href="#team">People</a>
+        <a class="nav-cta" href="https://play.gamma-zero.com/" target="_blank" rel="noopener noreferrer">Try the playground <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-topline"><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> A generalist policy for robot motion</p><span class="hero-index" aria-hidden="true">RESEARCH IN MOTION — γ₀</span></div>
+      <div class="hero-copy">
+        <h1 id="hero-title">Many robots.<br><em>One policy.</em></h1>
+        <div class="hero-aside">
+          <p>A shared foundation for motion.<br> Across different bodies. On the ground<br class="desktop-break"> and in the air.</p>
+          <a class="button button-primary" href="https://play.gamma-zero.com/" target="_blank" rel="noopener noreferrer">Experience the policy <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="#overview">Explore the research <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+      <figure class="hero-film">
+        <div class="hero-media"><video class="hero-video" autoplay muted loop playsinline preload="none" poster="assets/hero-fleet-poster.webp" aria-label="Unitree Go2, Silver Badger, and Unitree G1 outdoor hardware deployment">
+              <source data-src="https://assets.gamma-zero.com/website/deployment-clip3-720p30-sdr-20260917.mp4" data-local-src="assets/deployment-clip3-720p30-sdr-20260917.mp4" data-hdr-src="https://assets.gamma-zero.com/website/deployment-clip3-720p30-hlg-20260917.mp4" data-local-hdr-src="assets/deployment-clip3-720p30-hlg-20260917.mp4" type="video/mp4">
+            </video><a class="film-link" href="#deployments"><span class="film-icon" aria-hidden="true">↗</span><span>From simulation<br><strong>into the real world.</strong></span></a></div>
+        <figcaption><span><span class="caption-index">FIELD NOTES / 01</span> Three embodiments. The same policy.</span><button id="motion-toggle" type="button">Pause motion <span aria-hidden="true">Ⅱ</span></button></figcaption>
+      </figure>
+      <div class="research-strip" aria-label="Project overview">
+        <div><span class="strip-number">01</span><span>Shared policy<br><strong>Joint-level control</strong></span></div>
+        <a href="#robots"><span class="strip-number" data-robot-count>297</span><span>Robot models<br><strong>A growing collection <span aria-hidden="true">↗</span></strong></span></a>
+        <div><span class="strip-symbol" aria-hidden="true">↔</span><span>Across embodiments<br><strong>Wheels, legs &amp; rotors</strong></span></div>
+      </div>
+    </section>
+
+    <section class="section playground-section" id="overview" aria-label="Interactive playground">
+      <div class="playground-copy">
+        <p class="eyebrow">01 / THE IDEA</p>
+        <h2>Motion that goes<br><em>beyond one body.</em></h2>
+        <p class="playground-intro">We’re building a foundation motion policy for any robot, on the ground or in the air, with wheels, legs or rotors.</p>
+        <p class="playground-intro">It learns across millions of embodiments derived from a growing collection of more than 200 realistic robot models. With every robot added, the policy becomes more capable and better able to transfer to new robots.</p>
+        <a class="text-link" href="https://play.gamma-zero.com/" target="_blank" rel="noopener noreferrer">Meet the policy in your browser <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="playground-preview-wrap">
+        <a class="playground-preview" href="https://play.gamma-zero.com/" target="_blank" rel="noopener noreferrer" aria-label="Open the interactive playground in a new tab">
+          <video class="playground-preview-video" autoplay muted loop playsinline preload="none" poster="assets/playground-preview-r9-223-20260928-poster.webp" tabindex="-1">
+            <source data-src="https://assets.gamma-zero.com/website/playground-preview-r9-223-1440p60-optimized-20261001.mp4" data-local-src="assets/playground-preview-r9-223-1440p60-optimized-20261001.mp4" type="video/mp4">
+          </video>
+        </a>
+        <a class="playground-link" href="https://play.gamma-zero.com/" target="_blank" rel="noopener noreferrer">Interactive playground <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="section deployment-section" id="deployments" aria-labelledby="deployment-title">
+      <div class="section-heading">
+        <p class="eyebrow">02 / OUT IN THE WORLD</p>
+        <h2 id="deployment-title">Different bodies.<br><em>Shared capabilities.</em></h2>
+        <p>A single policy controls every robot at the joint level.</p>
+      </div>
+
+      <div class="deployment-grid">
+        <article class="deployment-card">
+          <div class="deployment-media">
+            <video class="deployment-video" autoplay muted loop playsinline preload="none" data-poster="assets/deployment-clip2-poster.webp" aria-label="Unitree Go2, Silver Badger, and Unitree G1 outdoor hardware deployment">
+              <source data-src="https://assets.gamma-zero.com/website/deployment-clip2-720p30-sdr-20260917.mp4" data-local-src="assets/deployment-clip2-720p30-sdr-20260917.mp4" data-hdr-src="https://assets.gamma-zero.com/website/deployment-clip2-720p30-hlg-20260917.mp4" data-local-hdr-src="assets/deployment-clip2-720p30-hlg-20260917.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="deployment-copy"><h3>Unitree Go2 · Silver Badger · Unitree G1</h3></div>
+        </article>
+        <article class="deployment-card">
+          <div class="deployment-media">
+            <video class="deployment-video" autoplay muted loop playsinline preload="none" data-poster="assets/deployment-clip1-poster.webp" aria-label="Unitree Go2, Silver Badger, and Unitree G1 outdoor hardware deployment">
+              <source data-src="https://assets.gamma-zero.com/website/deployment-clip1-720p30-sdr-20260917.mp4" data-local-src="assets/deployment-clip1-720p30-sdr-20260917.mp4" data-hdr-src="https://assets.gamma-zero.com/website/deployment-clip1-720p30-hlg-20260917.mp4" data-local-hdr-src="assets/deployment-clip1-720p30-hlg-20260917.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="deployment-copy"><h3>Unitree Go2 · Silver Badger · Unitree G1</h3></div>
+        </article>
+        <article class="deployment-card">
+          <div class="deployment-media">
+            <video class="deployment-video" autoplay muted loop playsinline preload="none" data-poster="assets/deployment-clip5-poster.webp" aria-label="Unitree H1 outdoor hardware deployment">
+              <source data-src="https://assets.gamma-zero.com/website/deployment-clip5-720p30-sdr-20260917.mp4" data-local-src="assets/deployment-clip5-720p30-sdr-20260917.mp4" data-hdr-src="https://assets.gamma-zero.com/website/deployment-clip5-720p30-hlg-20260917.mp4" data-local-hdr-src="assets/deployment-clip5-720p30-hlg-20260917.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="deployment-copy"><h3>Unitree H1</h3></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section methodology-section" id="methodology" aria-labelledby="methodology-title">
+      <div class="section-heading methodology-heading">
+        <p class="eyebrow">03 / THE METHODOLOGY</p>
+        <h2 id="methodology-title">Diversity is<br><em>the training ground.</em></h2>
+        <p>We take <a class="methodology-link" href="https://nico-bohlinger.github.io/one_policy_to_run_them_all_website/" target="_blank" rel="noopener noreferrer">Unified Robot Morphology Architecture (URMA)</a> and <a class="methodology-link" href="https://embodiment-scaling-laws.github.io/" target="_blank" rel="noopener noreferrer">Embodiment Scaling Laws</a> to the extreme by randomizing robot embodiments on the fly throughout training. This exposes a single policy, conditioned on each embodiment, to the broadest possible range of robot morphologies. By learning from this diversity, the policy develops generalizable motion skills that transfer to new embodiments.</p>
+      </div>
+
+      <div class="methodology-media">
+        <video class="methodology-video" autoplay muted loop playsinline preload="none" data-poster="assets/training-methodology-r9-v12-20261001c-poster.webp" aria-label="A continuously changing fleet of robot embodiments during training">
+          <source data-src="https://assets.gamma-zero.com/website/training-methodology-r9-v12-1440p60-optimized-20261001.mp4" data-local-src="assets/training-methodology-r9-v12-1440p60-optimized-20261001.mp4" data-compact-src="https://assets.gamma-zero.com/website/training-methodology-r9-v12-1080p60-optimized-20261001.mp4" data-local-compact-src="assets/training-methodology-r9-v12-1080p60-optimized-20261001.mp4" type="video/mp4">
+        </video>
+      </div>
+    </section>
+
+    <section class="section robot-collection-section" id="robots" aria-labelledby="robot-collection-title">
+      <p class="eyebrow">04 / THE ROBOT COLLECTION</p>
+      <div class="collection-heading">
+        <h2 id="robot-collection-title">A world of embodiments.</h2>
+        <button class="collection-toggle" id="collection-toggle" type="button" aria-expanded="false" aria-controls="robot-collection">Show all 297 robots <span aria-hidden="true">↓</span></button>
+      </div>
+      <div class="gallery-tools">
+        <p id="gallery-count" role="status" aria-live="polite">6 of 297 robots</p>
+        <label><span class="visually-hidden">Search robots</span><input type="search" id="robot-search" placeholder="Find a robot…" autocomplete="off"></label>
+      </div>
+      <div class="robot-gallery" id="robot-collection">
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=1x_neo" target="_blank" rel="noopener noreferrer" aria-label="Open 1X Neo in the playground (new tab)" id="1x_neo" data-name="1x_neo"><img src="assets/robots/1x_neo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>1X Neo</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=adam_lite" target="_blank" rel="noopener noreferrer" aria-label="Open Adam Lite in the playground (new tab)" id="adam_lite" data-name="adam_lite"><img src="assets/robots/adam_lite.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Adam Lite</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agibot_a2" target="_blank" rel="noopener noreferrer" aria-label="Open Agibot A2 in the playground (new tab)" id="agibot_a2" data-name="agibot_a2"><img src="assets/robots/agibot_a2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Agibot A2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agibot_a3" target="_blank" rel="noopener noreferrer" aria-label="Open AgiBot A3 T2.5 in the playground (new tab)" id="agibot_a3" data-name="agibot_a3"><img src="assets/robots/agibot_a3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>AgiBot A3 T2.5</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agibot_d1" target="_blank" rel="noopener noreferrer" aria-label="Open Agibot D1 in the playground (new tab)" id="agibot_d1" data-name="agibot_d1"><img src="assets/robots/agibot_d1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Agibot D1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agibot_g1" target="_blank" rel="noopener noreferrer" aria-label="Open Agibot G1 in the playground (new tab)" id="agibot_g1" data-name="agibot_g1"><img src="assets/robots/agibot_g1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Agibot G1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agibot_x1" target="_blank" rel="noopener noreferrer" aria-label="Open Agibot X1 in the playground (new tab)" hidden id="agibot_x1" data-name="agibot_x1"><img src="assets/robots/agibot_x1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Agibot X1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agibot_x2" target="_blank" rel="noopener noreferrer" aria-label="Open Agibot X2 in the playground (new tab)" hidden id="agibot_x2" data-name="agibot_x2"><img src="assets/robots/agibot_x2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Agibot X2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agilex_limo" target="_blank" rel="noopener noreferrer" aria-label="Open Agilex Limo in the playground (new tab)" hidden id="agilex_limo" data-name="agilex_limo"><img src="assets/robots/agilex_limo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Agilex Limo</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agilex_piper" target="_blank" rel="noopener noreferrer" aria-label="Open Agilex Piper in the playground (new tab)" hidden id="agilex_piper" data-name="agilex_piper"><img src="assets/robots/agilex_piper.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Agilex Piper</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agility_digit" target="_blank" rel="noopener noreferrer" aria-label="Open Agility Digit in the playground (new tab)" hidden id="agility_digit" data-name="agility_digit"><img src="assets/robots/agility_digit.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Agility Digit</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=agiloped" target="_blank" rel="noopener noreferrer" aria-label="Open Agiloped in the playground (new tab)" hidden id="agiloped" data-name="agiloped"><img src="assets/robots/agiloped.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Agiloped</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=aibo" target="_blank" rel="noopener noreferrer" aria-label="Open Aibo in the playground (new tab)" hidden id="aibo" data-name="aibo"><img src="assets/robots/aibo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Aibo</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=airbus_vispa" target="_blank" rel="noopener noreferrer" aria-label="Open Airbus VISPA in the playground (new tab)" hidden id="airbus_vispa" data-name="airbus_vispa"><img src="assets/robots/airbus_vispa.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Airbus VISPA</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=aloha" target="_blank" rel="noopener noreferrer" aria-label="Open Aloha in the playground (new tab)" hidden id="aloha" data-name="aloha"><img src="assets/robots/aloha.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Aloha</span></a>
+        <div class="robot-card" hidden id="ambench_fahexa" data-name="ambench_fahexa"><img src="assets/robots/ambench_fahexa.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>AM-Bench FA-Hexa</span></div>
+        <div class="robot-card" hidden id="ambench_omnihexa" data-name="ambench_omnihexa"><img src="assets/robots/ambench_omnihexa.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>AM-Bench Omni-Hexa</span></div>
+        <div class="robot-card" hidden id="ambench_uahexa" data-name="ambench_uahexa"><img src="assets/robots/ambench_uahexa.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>AM-Bench UA-Hexa</span></div>
+        <div class="robot-card" hidden id="ambench_uaquad" data-name="ambench_uaquad"><img src="assets/robots/ambench_uaquad.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>AM-Bench UA-Quad</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=anymal_b" target="_blank" rel="noopener noreferrer" aria-label="Open Anymal B in the playground (new tab)" hidden id="anymal_b" data-name="anymal_b"><img src="assets/robots/anymal_b.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Anymal B</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=anymal_d" target="_blank" rel="noopener noreferrer" aria-label="Open ANYmal D in the playground (new tab)" hidden id="anymal_d" data-name="anymal_d"><img src="assets/robots/anymal_d.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>ANYmal D</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=apptronik_apollo" target="_blank" rel="noopener noreferrer" aria-label="Open Apptronik Apollo in the playground (new tab)" hidden id="apptronik_apollo" data-name="apptronik_apollo"><img src="assets/robots/apptronik_apollo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Apptronik Apollo</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=arx_l5" target="_blank" rel="noopener noreferrer" aria-label="Open Arx L5 in the playground (new tab)" hidden id="arx_l5" data-name="arx_l5"><img src="assets/robots/arx_l5.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Arx L5</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=asimov_1" target="_blank" rel="noopener noreferrer" aria-label="Open Asimov 1 in the playground (new tab)" hidden id="asimov_1" data-name="asimov_1"><img src="assets/robots/asimov_1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Asimov 1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=asimov_v0" target="_blank" rel="noopener noreferrer" aria-label="Open Asimov V0 in the playground (new tab)" hidden id="asimov_v0" data-name="asimov_v0"><img src="assets/robots/asimov_v0.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Asimov V0</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=atlas" target="_blank" rel="noopener noreferrer" aria-label="Open Atlas in the playground (new tab)" hidden id="atlas" data-name="atlas"><img src="assets/robots/atlas.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Atlas</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=bambot" target="_blank" rel="noopener noreferrer" aria-label="Open BamBot in the playground (new tab)" hidden id="bambot" data-name="bambot"><img src="assets/robots/bambot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>BamBot</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=barkour_v0" target="_blank" rel="noopener noreferrer" aria-label="Open Barkour V0 in the playground (new tab)" hidden id="barkour_v0" data-name="barkour_v0"><img src="assets/robots/barkour_v0.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Barkour V0</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=barkour_vb" target="_blank" rel="noopener noreferrer" aria-label="Open Barkour Vb in the playground (new tab)" hidden id="barkour_vb" data-name="barkour_vb"><img src="assets/robots/barkour_vb.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Barkour Vb</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=barrett_wam_dual" target="_blank" rel="noopener noreferrer" aria-label="Open Barrett WAM Dual in the playground (new tab)" hidden id="barrett_wam_dual" data-name="barrett_wam_dual"><img src="assets/robots/barrett_wam_dual.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Barrett WAM Dual</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=baxter" target="_blank" rel="noopener noreferrer" aria-label="Open Baxter in the playground (new tab)" hidden id="baxter" data-name="baxter"><img src="assets/robots/baxter.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Baxter</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=berkeley_humanoid" target="_blank" rel="noopener noreferrer" aria-label="Open Berkeley Humanoid in the playground (new tab)" hidden id="berkeley_humanoid" data-name="berkeley_humanoid"><img src="assets/robots/berkeley_humanoid.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Berkeley Humanoid</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=berkeley_humanoid_lite" target="_blank" rel="noopener noreferrer" aria-label="Open Berkeley Humanoid Lite in the playground (new tab)" hidden id="berkeley_humanoid_lite" data-name="berkeley_humanoid_lite"><img src="assets/robots/berkeley_humanoid_lite.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Berkeley Humanoid Lite</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=bittle" target="_blank" rel="noopener noreferrer" aria-label="Open Bittle in the playground (new tab)" hidden id="bittle" data-name="bittle"><img src="assets/robots/bittle.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Bittle</span></a>
+        <div class="robot-card" hidden id="bluerov2_heavy" data-name="bluerov2_heavy"><img src="assets/robots/bluerov2_heavy.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>BlueROV2 Heavy</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=bolt" target="_blank" rel="noopener noreferrer" aria-label="Open Bolt in the playground (new tab)" hidden id="bolt" data-name="bolt"><img src="assets/robots/bolt.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Bolt</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=booster_k1" target="_blank" rel="noopener noreferrer" aria-label="Open Booster K1 in the playground (new tab)" hidden id="booster_k1" data-name="booster_k1"><img src="assets/robots/booster_k1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Booster K1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=booster_t1" target="_blank" rel="noopener noreferrer" aria-label="Open Booster T1 in the playground (new tab)" hidden id="booster_t1" data-name="booster_t1"><img src="assets/robots/booster_t1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Booster T1</span></a>
+        <div class="robot-card" hidden id="booster_t2" data-name="booster_t2"><img src="assets/robots/booster_t2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Booster T2</span></div>
+        <div class="robot-card" hidden id="bruce" data-name="bruce"><img src="assets/robots/bruce.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>BRUCE</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=cassie" target="_blank" rel="noopener noreferrer" aria-label="Open Cassie in the playground (new tab)" hidden id="cassie" data-name="cassie"><img src="assets/robots/cassie.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Cassie</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=centauro" target="_blank" rel="noopener noreferrer" aria-label="Open CENTAURO in the playground (new tab)" hidden id="centauro" data-name="centauro"><img src="assets/robots/centauro.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>CENTAURO</span></a>
+        <div class="robot-card" hidden id="cerepal_ant001" data-name="cerepal_ant001"><img src="assets/robots/cerepal_ant001.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Cerepal ANT001</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=clearpath_dingo" target="_blank" rel="noopener noreferrer" aria-label="Open Clearpath Dingo in the playground (new tab)" hidden id="clearpath_dingo" data-name="clearpath_dingo"><img src="assets/robots/clearpath_dingo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Clearpath Dingo</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=clearpath_jackal" target="_blank" rel="noopener noreferrer" aria-label="Open Clearpath Jackal in the playground (new tab)" hidden id="clearpath_jackal" data-name="clearpath_jackal"><img src="assets/robots/clearpath_jackal.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Clearpath Jackal</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=comau_edo" target="_blank" rel="noopener noreferrer" aria-label="Open Comau e.DO in the playground (new tab)" hidden id="comau_edo" data-name="comau_edo"><img src="assets/robots/comau_edo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Comau e.DO</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=crab" target="_blank" rel="noopener noreferrer" aria-label="Open Crab in the playground (new tab)" hidden id="crab" data-name="crab"><img src="assets/robots/crab.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Crab</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=crazyflie_2" target="_blank" rel="noopener noreferrer" aria-label="Open Crazyflie 2 in the playground (new tab)" hidden id="crazyflie_2" data-name="crazyflie_2"><img src="assets/robots/crazyflie_2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Crazyflie 2</span></a>
+        <div class="robot-card" hidden id="cubic_doggo" data-name="cubic_doggo"><img src="assets/robots/cubic_doggo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Cubic Doggo</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=custom_hexapod" target="_blank" rel="noopener noreferrer" aria-label="Open Custom Hexapod in the playground (new tab)" hidden id="custom_hexapod" data-name="custom_hexapod"><img src="assets/robots/custom_hexapod.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Custom Hexapod</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=cyberdog2" target="_blank" rel="noopener noreferrer" aria-label="Open Cyberdog2 in the playground (new tab)" hidden id="cyberdog2" data-name="cyberdog2"><img src="assets/robots/cyberdog2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Cyberdog2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=cyclbot" target="_blank" rel="noopener noreferrer" aria-label="Open cyclBot in the playground (new tab)" hidden id="cyclbot" data-name="cyclbot"><img src="assets/robots/cyclbot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>cyclBot</span></a>
+        <div class="robot-card" hidden id="ddt_diablo" data-name="ddt_diablo"><img src="assets/robots/ddt_diablo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>DDT Diablo</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ddt_tita" target="_blank" rel="noopener noreferrer" aria-label="Open Ddt Tita in the playground (new tab)" hidden id="ddt_tita" data-name="ddt_tita"><img src="assets/robots/ddt_tita.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ddt Tita</span></a>
+        <div class="robot-card" hidden id="deeprobotics_dr02" data-name="deeprobotics_dr02"><img src="assets/robots/deeprobotics_dr02.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Deep Robotics DR02 Standard</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=deeprobotics_lite3" target="_blank" rel="noopener noreferrer" aria-label="Open Deeprobotics Lite3 in the playground (new tab)" hidden id="deeprobotics_lite3" data-name="deeprobotics_lite3"><img src="assets/robots/deeprobotics_lite3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Deeprobotics Lite3</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=deeprobotics_m20" target="_blank" rel="noopener noreferrer" aria-label="Open Deeprobotics M20 in the playground (new tab)" hidden id="deeprobotics_m20" data-name="deeprobotics_m20"><img src="assets/robots/deeprobotics_m20.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Deeprobotics M20</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=deeprobotics_x30" target="_blank" rel="noopener noreferrer" aria-label="Open Deeprobotics X30 in the playground (new tab)" hidden id="deeprobotics_x30" data-name="deeprobotics_x30"><img src="assets/robots/deeprobotics_x30.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Deeprobotics X30</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=denso_cobotta" target="_blank" rel="noopener noreferrer" aria-label="Open Denso Cobotta in the playground (new tab)" hidden id="denso_cobotta" data-name="denso_cobotta"><img src="assets/robots/denso_cobotta.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Denso Cobotta</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=denso_cobotta_1300" target="_blank" rel="noopener noreferrer" aria-label="Open Denso Cobotta 1300 in the playground (new tab)" hidden id="denso_cobotta_1300" data-name="denso_cobotta_1300"><img src="assets/robots/denso_cobotta_1300.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Denso Cobotta 1300</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=dlr_toro" target="_blank" rel="noopener noreferrer" aria-label="Open Dlr Toro in the playground (new tab)" hidden id="dlr_toro" data-name="dlr_toro"><img src="assets/robots/dlr_toro.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Dlr Toro</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=doosan_h2017" target="_blank" rel="noopener noreferrer" aria-label="Open Doosan H2017 in the playground (new tab)" hidden id="doosan_h2017" data-name="doosan_h2017"><img src="assets/robots/doosan_h2017.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Doosan H2017</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=draco3" target="_blank" rel="noopener noreferrer" aria-label="Open Draco3 in the playground (new tab)" hidden id="draco3" data-name="draco3"><img src="assets/robots/draco3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Draco3</span></a>
+        <div class="robot-card" hidden id="droidup_e1" data-name="droidup_e1"><img src="assets/robots/droidup_e1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>DroidUp E1</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=duck_mini" target="_blank" rel="noopener noreferrer" aria-label="Open Duck Mini in the playground (new tab)" hidden id="duck_mini" data-name="duck_mini"><img src="assets/robots/duck_mini.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Duck Mini</span></a>
+        <div class="robot-card" hidden id="duke_humanoid" data-name="duke_humanoid"><img src="assets/robots/duke_humanoid.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Duke Humanoid</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=dynamixel_2r" target="_blank" rel="noopener noreferrer" aria-label="Open Dynamixel 2r in the playground (new tab)" hidden id="dynamixel_2r" data-name="dynamixel_2r"><img src="assets/robots/dynamixel_2r.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Dynamixel 2r</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=elf2" target="_blank" rel="noopener noreferrer" aria-label="Open Elf2 in the playground (new tab)" hidden id="elf2" data-name="elf2"><img src="assets/robots/elf2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Elf2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=engineai_pm01" target="_blank" rel="noopener noreferrer" aria-label="Open ENGINEAI PM01 in the playground (new tab)" hidden id="engineai_pm01" data-name="engineai_pm01"><img src="assets/robots/engineai_pm01.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>ENGINEAI PM01</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=engineai_sa01" target="_blank" rel="noopener noreferrer" aria-label="Open Engineai Sa01 in the playground (new tab)" hidden id="engineai_sa01" data-name="engineai_sa01"><img src="assets/robots/engineai_sa01.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Engineai Sa01</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ergocub" target="_blank" rel="noopener noreferrer" aria-label="Open Ergocub in the playground (new tab)" hidden id="ergocub" data-name="ergocub"><img src="assets/robots/ergocub.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ergocub</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=eve_r3" target="_blank" rel="noopener noreferrer" aria-label="Open Eve R3 in the playground (new tab)" hidden id="eve_r3" data-name="eve_r3"><img src="assets/robots/eve_r3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Eve R3</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=evobot" target="_blank" rel="noopener noreferrer" aria-label="Open Evobot in the playground (new tab)" hidden id="evobot" data-name="evobot"><img src="assets/robots/evobot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Evobot</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=fanuc_crx10" target="_blank" rel="noopener noreferrer" aria-label="Open Fanuc Crx10 in the playground (new tab)" hidden id="fanuc_crx10" data-name="fanuc_crx10"><img src="assets/robots/fanuc_crx10.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Fanuc Crx10</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=fanuc_m710ic" target="_blank" rel="noopener noreferrer" aria-label="Open Fanuc M-710iC in the playground (new tab)" hidden id="fanuc_m710ic" data-name="fanuc_m710ic"><img src="assets/robots/fanuc_m710ic.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Fanuc M-710iC</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=festo_cobot" target="_blank" rel="noopener noreferrer" aria-label="Open Festo Cobot in the playground (new tab)" hidden id="festo_cobot" data-name="festo_cobot"><img src="assets/robots/festo_cobot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Festo Cobot</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=fetch_panda" target="_blank" rel="noopener noreferrer" aria-label="Open Fetch Panda in the playground (new tab)" hidden id="fetch_panda" data-name="fetch_panda"><img src="assets/robots/fetch_panda.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Fetch Panda</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=flexiv_rizon4" target="_blank" rel="noopener noreferrer" aria-label="Open Flexiv Rizon4 in the playground (new tab)" hidden id="flexiv_rizon4" data-name="flexiv_rizon4"><img src="assets/robots/flexiv_rizon4.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Flexiv Rizon4</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=fourier_gr1t1" target="_blank" rel="noopener noreferrer" aria-label="Open Fourier Gr1t1 in the playground (new tab)" hidden id="fourier_gr1t1" data-name="fourier_gr1t1"><img src="assets/robots/fourier_gr1t1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Fourier Gr1t1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=fourier_gr1t2" target="_blank" rel="noopener noreferrer" aria-label="Open Fourier Gr1T2 in the playground (new tab)" hidden id="fourier_gr1t2" data-name="fourier_gr1t2"><img src="assets/robots/fourier_gr1t2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Fourier Gr1T2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=fourier_gr2v3" target="_blank" rel="noopener noreferrer" aria-label="Open Fourier Gr2V3 in the playground (new tab)" hidden id="fourier_gr2v3" data-name="fourier_gr2v3"><img src="assets/robots/fourier_gr2v3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Fourier Gr2V3</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=fourier_gr3" target="_blank" rel="noopener noreferrer" aria-label="Open Fourier Gr3 in the playground (new tab)" hidden id="fourier_gr3" data-name="fourier_gr3"><img src="assets/robots/fourier_gr3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Fourier Gr3</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=fourier_n1" target="_blank" rel="noopener noreferrer" aria-label="Open Fourier N1 in the playground (new tab)" hidden id="fourier_n1" data-name="fourier_n1"><img src="assets/robots/fourier_n1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Fourier N1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=franka_fr3" target="_blank" rel="noopener noreferrer" aria-label="Open Franka Fr3 in the playground (new tab)" hidden id="franka_fr3" data-name="franka_fr3"><img src="assets/robots/franka_fr3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Franka Fr3</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=franka_panda" target="_blank" rel="noopener noreferrer" aria-label="Open Franka Panda in the playground (new tab)" hidden id="franka_panda" data-name="franka_panda"><img src="assets/robots/franka_panda.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Franka Panda</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=galaxea_a1" target="_blank" rel="noopener noreferrer" aria-label="Open Galaxea A1 in the playground (new tab)" hidden id="galaxea_a1" data-name="galaxea_a1"><img src="assets/robots/galaxea_a1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Galaxea A1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=galaxea_r1_pro" target="_blank" rel="noopener noreferrer" aria-label="Open Galaxea R1 Pro in the playground (new tab)" hidden id="galaxea_r1_pro" data-name="galaxea_r1_pro"><img src="assets/robots/galaxea_r1_pro.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Galaxea R1 Pro</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=galbot_s1" target="_blank" rel="noopener noreferrer" aria-label="Open Galbot S1 in the playground (new tab)" hidden id="galbot_s1" data-name="galbot_s1"><img src="assets/robots/galbot_s1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Galbot S1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=gene01" target="_blank" rel="noopener noreferrer" aria-label="Open GENE.01 in the playground (new tab)" hidden id="gene01" data-name="gene01"><img src="assets/robots/gene01.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>GENE.01</span></a>
+        <div class="robot-card" hidden id="ggldnl_hexapod" data-name="ggldnl_hexapod"><img src="assets/robots/ggldnl_hexapod.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ggldnl Hexapod</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=minitaur" target="_blank" rel="noopener noreferrer" aria-label="Open Ghost Minitaur in the playground (new tab)" hidden id="minitaur" data-name="minitaur"><img src="assets/robots/minitaur.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ghost Minitaur</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=tri_omni" target="_blank" rel="noopener noreferrer" aria-label="Open Gimbalrotor tri_omni in the playground (new tab)" hidden id="tri_omni" data-name="tri_omni"><img src="assets/robots/tri_omni.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Gimbalrotor tri_omni</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ginger" target="_blank" rel="noopener noreferrer" aria-label="Open Ginger in the playground (new tab)" hidden id="ginger" data-name="ginger"><img src="assets/robots/ginger.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ginger</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=golem" target="_blank" rel="noopener noreferrer" aria-label="Open Golem in the playground (new tab)" hidden id="golem" data-name="golem"><img src="assets/robots/golem.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Golem</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=google_robot" target="_blank" rel="noopener noreferrer" aria-label="Open Google Robot in the playground (new tab)" hidden id="google_robot" data-name="google_robot"><img src="assets/robots/google_robot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Google Robot</span></a>
+        <div class="robot-card" hidden id="green" data-name="green"><img src="assets/robots/green.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Green</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=hebi_daisy" target="_blank" rel="noopener noreferrer" aria-label="Open HEBI Daisy in the playground (new tab)" hidden id="hebi_daisy" data-name="hebi_daisy"><img src="assets/robots/hebi_daisy.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>HEBI Daisy</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=hebi_tready" target="_blank" rel="noopener noreferrer" aria-label="Open HEBI Tready in the playground (new tab)" hidden id="hebi_tready" data-name="hebi_tready"><img src="assets/robots/hebi_tready.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>HEBI Tready</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=hello_stretch" target="_blank" rel="noopener noreferrer" aria-label="Open Hello Stretch in the playground (new tab)" hidden id="hello_stretch" data-name="hello_stretch"><img src="assets/robots/hello_stretch.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Hello Stretch</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=hello_stretch_3" target="_blank" rel="noopener noreferrer" aria-label="Open Hello Stretch 3 in the playground (new tab)" hidden id="hello_stretch_3" data-name="hello_stretch_3"><img src="assets/robots/hello_stretch_3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Hello Stretch 3</span></a>
+        <div class="robot-card" hidden id="hello_stretch_4" data-name="hello_stretch_4"><img src="assets/robots/hello_stretch_4.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Hello Stretch 4</span></div>
+        <div class="robot-card" hidden id="hexbug" data-name="hexbug"><img src="assets/robots/hexbug.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Hexbug</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=hightorque_pi_plus" target="_blank" rel="noopener noreferrer" aria-label="Open Hightorque Pi Plus in the playground (new tab)" hidden id="hightorque_pi_plus" data-name="hightorque_pi_plus"><img src="assets/robots/hightorque_pi_plus.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Hightorque Pi Plus</span></a>
+        <div class="robot-card" hidden id="honey_badger_40" data-name="honey_badger_40"><img src="assets/robots/honey_badger_40.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Honey Badger 40</span></div>
+        <div class="robot-card" hidden id="honey_badger_50" data-name="honey_badger_50"><img src="assets/robots/honey_badger_50.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Honey Badger 50</span></div>
+        <div class="robot-card" hidden id="honey_badger_50w" data-name="honey_badger_50w"><img src="assets/robots/honey_badger_50w.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Honey Badger 50W</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=hsr" target="_blank" rel="noopener noreferrer" aria-label="Open Hsr in the playground (new tab)" hidden id="hsr" data-name="hsr"><img src="assets/robots/hsr.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Hsr</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=hunter_biped" target="_blank" rel="noopener noreferrer" aria-label="Open Hunter Biped in the playground (new tab)" hidden id="hunter_biped" data-name="hunter_biped"><img src="assets/robots/hunter_biped.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Hunter Biped</span></a>
+        <div class="robot-card" hidden id="husky_a300" data-name="husky_a300"><img src="assets/robots/husky_a300.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Husky A300</span></div>
+        <div class="robot-card" hidden id="husky_dual_ur5e" data-name="husky_dual_ur5e"><img src="assets/robots/husky_dual_ur5e.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Husky Dual UR5e</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=hyq" target="_blank" rel="noopener noreferrer" aria-label="Open Hyq in the playground (new tab)" hidden id="hyq" data-name="hyq"><img src="assets/robots/hyq.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Hyq</span></a>
+        <div class="robot-card" hidden id="hyqreal2" data-name="hyqreal2"><img src="assets/robots/hyqreal2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>HyQReal2</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=i2rt_yam" target="_blank" rel="noopener noreferrer" aria-label="Open I2rt Yam in the playground (new tab)" hidden id="i2rt_yam" data-name="i2rt_yam"><img src="assets/robots/i2rt_yam.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>I2rt Yam</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=icub" target="_blank" rel="noopener noreferrer" aria-label="Open Icub in the playground (new tab)" hidden id="icub" data-name="icub"><img src="assets/robots/icub.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Icub</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=idealworks_iwhub" target="_blank" rel="noopener noreferrer" aria-label="Open Idealworks Iwhub in the playground (new tab)" hidden id="idealworks_iwhub" data-name="idealworks_iwhub"><img src="assets/robots/idealworks_iwhub.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Idealworks Iwhub</span></a>
+        <div class="robot-card" hidden id="iit_r1" data-name="iit_r1"><img src="assets/robots/iit_r1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>IIT R1</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ingenuity" target="_blank" rel="noopener noreferrer" aria-label="Open Ingenuity in the playground (new tab)" hidden id="ingenuity" data-name="ingenuity"><img src="assets/robots/ingenuity.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ingenuity</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=irobot_create3" target="_blank" rel="noopener noreferrer" aria-label="Open Irobot Create3 in the playground (new tab)" hidden id="irobot_create3" data-name="irobot_create3"><img src="assets/robots/irobot_create3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Irobot Create3</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=jaxon" target="_blank" rel="noopener noreferrer" aria-label="Open JAXON in the playground (new tab)" hidden id="jaxon" data-name="jaxon"><img src="assets/robots/jaxon.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>JAXON</span></a>
+        <div class="robot-card" hidden id="jayli_four_legged" data-name="jayli_four_legged"><img src="assets/robots/jayli_four_legged.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Jayli Four Legged</span></div>
+        <div class="robot-card" hidden id="jsk_dragon" data-name="jsk_dragon"><img src="assets/robots/jsk_dragon.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>JSK DRAGON</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=jvrc1" target="_blank" rel="noopener noreferrer" aria-label="Open Jvrc1 in the playground (new tab)" hidden id="jvrc1" data-name="jvrc1"><img src="assets/robots/jvrc1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Jvrc1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kangaroo" target="_blank" rel="noopener noreferrer" aria-label="Open Kangaroo in the playground (new tab)" hidden id="kangaroo" data-name="kangaroo"><img src="assets/robots/kangaroo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kangaroo</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kawasaki_rs007n" target="_blank" rel="noopener noreferrer" aria-label="Open Kawasaki Rs007n in the playground (new tab)" hidden id="kawasaki_rs007n" data-name="kawasaki_rs007n"><img src="assets/robots/kawasaki_rs007n.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kawasaki Rs007n</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kawasaki_rs013n" target="_blank" rel="noopener noreferrer" aria-label="Open Kawasaki Rs013n in the playground (new tab)" hidden id="kawasaki_rs013n" data-name="kawasaki_rs013n"><img src="assets/robots/kawasaki_rs013n.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kawasaki Rs013n</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kawasaki_rs025n" target="_blank" rel="noopener noreferrer" aria-label="Open Kawasaki Rs025n in the playground (new tab)" hidden id="kawasaki_rs025n" data-name="kawasaki_rs025n"><img src="assets/robots/kawasaki_rs025n.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kawasaki Rs025n</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kawasaki_rs080" target="_blank" rel="noopener noreferrer" aria-label="Open Kawasaki Rs080 in the playground (new tab)" hidden id="kawasaki_rs080" data-name="kawasaki_rs080"><img src="assets/robots/kawasaki_rs080.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kawasaki Rs080</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kbot_v1" target="_blank" rel="noopener noreferrer" aria-label="Open Kbot V1 in the playground (new tab)" hidden id="kbot_v1" data-name="kbot_v1"><img src="assets/robots/kbot_v1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kbot V1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kbot_v2" target="_blank" rel="noopener noreferrer" aria-label="Open Kbot V2 in the playground (new tab)" hidden id="kbot_v2" data-name="kbot_v2"><img src="assets/robots/kbot_v2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kbot V2</span></a>
+        <div class="robot-card" hidden id="khr_3hv" data-name="khr_3hv"><img src="assets/robots/khr_3hv.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>KHR-3HV</span></div>
+        <div class="robot-card" hidden id="kiltro" data-name="kiltro"><img src="assets/robots/kiltro.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>KiLTRO</span></div>
+        <div class="robot-card" hidden id="kingfisher" data-name="kingfisher"><img src="assets/robots/kingfisher.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kingfisher</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kinova_gen3" target="_blank" rel="noopener noreferrer" aria-label="Open Kinova Gen3 in the playground (new tab)" hidden id="kinova_gen3" data-name="kinova_gen3"><img src="assets/robots/kinova_gen3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kinova Gen3</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kinova_jaco2" target="_blank" rel="noopener noreferrer" aria-label="Open Kinova Jaco2 in the playground (new tab)" hidden id="kinova_jaco2" data-name="kinova_jaco2"><img src="assets/robots/kinova_jaco2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kinova Jaco2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=koch_v1_1" target="_blank" rel="noopener noreferrer" aria-label="Open Koch V1 1 in the playground (new tab)" hidden id="koch_v1_1" data-name="koch_v1_1"><img src="assets/robots/koch_v1_1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Koch V1 1</span></a>
+        <div class="robot-card" hidden id="kolibri" data-name="kolibri"><img src="assets/robots/kolibri.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kolibri</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kuavo_s45" target="_blank" rel="noopener noreferrer" aria-label="Open Kuavo S45 in the playground (new tab)" hidden id="kuavo_s45" data-name="kuavo_s45"><img src="assets/robots/kuavo_s45.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kuavo S45</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kuka_iiwa_14" target="_blank" rel="noopener noreferrer" aria-label="Open Kuka Iiwa 14 in the playground (new tab)" hidden id="kuka_iiwa_14" data-name="kuka_iiwa_14"><img src="assets/robots/kuka_iiwa_14.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kuka Iiwa 14</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kuka_kr210" target="_blank" rel="noopener noreferrer" aria-label="Open Kuka Kr210 in the playground (new tab)" hidden id="kuka_kr210" data-name="kuka_kr210"><img src="assets/robots/kuka_kr210.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Kuka Kr210</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=kyon" target="_blank" rel="noopener noreferrer" aria-label="Open KYON in the playground (new tab)" hidden id="kyon" data-name="kyon"><img src="assets/robots/kyon.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>KYON</span></a>
+        <div class="robot-card" hidden id="leo_rover" data-name="leo_rover"><img src="assets/robots/leo_rover.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Leo Rover</span></div>
+        <div class="robot-card" hidden id="limx_luna" data-name="limx_luna"><img src="assets/robots/limx_luna.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>LimX Luna</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=limx_oli" target="_blank" rel="noopener noreferrer" aria-label="Open Limx Oli in the playground (new tab)" hidden id="limx_oli" data-name="limx_oli"><img src="assets/robots/limx_oli.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Limx Oli</span></a>
+        <div class="robot-card" hidden id="limx_tron1a_wf" data-name="limx_tron1a_wf"><img src="assets/robots/limx_tron1a_wf.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>LimX Tron1 WF</span></div>
+        <div class="robot-card" hidden id="limx_tron2b_dasf" data-name="limx_tron2b_dasf"><img src="assets/robots/limx_tron2b_dasf.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>LimX Tron2 DASF</span></div>
+        <div class="robot-card" hidden id="limx_tron2b_dasf2" data-name="limx_tron2b_dasf2"><img src="assets/robots/limx_tron2b_dasf2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>LimX Tron2 DASF2</span></div>
+        <div class="robot-card" hidden id="limx_tron2b_sf" data-name="limx_tron2b_sf"><img src="assets/robots/limx_tron2b_sf.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>LimX Tron2 SF</span></div>
+        <div class="robot-card" hidden id="limx_tron2b_wf" data-name="limx_tron2b_wf"><img src="assets/robots/limx_tron2b_wf.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>LimX Tron2 WF</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=limx_wl_p311" target="_blank" rel="noopener noreferrer" aria-label="Open LimX WL P311E in the playground (new tab)" hidden id="limx_wl_p311" data-name="limx_wl_p311"><img src="assets/robots/limx_wl_p311.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>LimX WL P311E</span></a>
+        <div class="robot-card" hidden id="loris" data-name="loris"><img src="assets/robots/loris.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>LORIS</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=magicbot_gen1" target="_blank" rel="noopener noreferrer" aria-label="Open Magicbot Gen1 in the playground (new tab)" hidden id="magicbot_gen1" data-name="magicbot_gen1"><img src="assets/robots/magicbot_gen1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Magicbot Gen1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=magicbot_z1" target="_blank" rel="noopener noreferrer" aria-label="Open Magicbot Z1 in the playground (new tab)" hidden id="magicbot_z1" data-name="magicbot_z1"><img src="assets/robots/magicbot_z1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Magicbot Z1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=magicdog" target="_blank" rel="noopener noreferrer" aria-label="Open Magicdog in the playground (new tab)" hidden id="magicdog" data-name="magicdog"><img src="assets/robots/magicdog.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Magicdog</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=magicdog_w" target="_blank" rel="noopener noreferrer" aria-label="Open Magicdog W in the playground (new tab)" hidden id="magicdog_w" data-name="magicdog_w"><img src="assets/robots/magicdog_w.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Magicdog W</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=microban" target="_blank" rel="noopener noreferrer" aria-label="Open Microban in the playground (new tab)" hidden id="microban" data-name="microban"><img src="assets/robots/microban.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Microban</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=microduck" target="_blank" rel="noopener noreferrer" aria-label="Open Microduck in the playground (new tab)" hidden id="microduck" data-name="microduck"><img src="assets/robots/microduck.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Microduck</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=mini_cheetah" target="_blank" rel="noopener noreferrer" aria-label="Open Mini Cheetah in the playground (new tab)" hidden id="mini_cheetah" data-name="mini_cheetah"><img src="assets/robots/mini_cheetah.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Mini Cheetah</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=mini_pi" target="_blank" rel="noopener noreferrer" aria-label="Open Mini Pi in the playground (new tab)" hidden id="mini_pi" data-name="mini_pi"><img src="assets/robots/mini_pi.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Mini Pi</span></a>
+        <div class="robot-card" hidden id="mini_pupper" data-name="mini_pupper"><img src="assets/robots/mini_pupper.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Mini Pupper</span></div>
+        <div class="robot-card" hidden id="mirrorme_bpx" data-name="mirrorme_bpx"><img src="assets/robots/mirrorme_bpx.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>MirrorMe BPX</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=mit_humanoid" target="_blank" rel="noopener noreferrer" aria-label="Open Mit Humanoid in the playground (new tab)" hidden id="mit_humanoid" data-name="mit_humanoid"><img src="assets/robots/mit_humanoid.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Mit Humanoid</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=motoman_nex10" target="_blank" rel="noopener noreferrer" aria-label="Open Motoman Nex10 in the playground (new tab)" hidden id="motoman_nex10" data-name="motoman_nex10"><img src="assets/robots/motoman_nex10.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Motoman Nex10</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=nao_v5" target="_blank" rel="noopener noreferrer" aria-label="Open Nao V5 in the playground (new tab)" hidden id="nao_v5" data-name="nao_v5"><img src="assets/robots/nao_v5.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Nao V5</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=nextage" target="_blank" rel="noopener noreferrer" aria-label="Open Nextage in the playground (new tab)" hidden id="nextage" data-name="nextage"><img src="assets/robots/nextage.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Nextage</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=nimbro_op2x" target="_blank" rel="noopener noreferrer" aria-label="Open NimbRo OP2X Adult in the playground (new tab)" hidden id="nimbro_op2x" data-name="nimbro_op2x"><img src="assets/robots/nimbro_op2x.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>NimbRo OP2X Adult</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=noetix_e1" target="_blank" rel="noopener noreferrer" aria-label="Open Noetix E1 in the playground (new tab)" hidden id="noetix_e1" data-name="noetix_e1"><img src="assets/robots/noetix_e1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Noetix E1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=noetix_n2" target="_blank" rel="noopener noreferrer" aria-label="Open Noetix N2 in the playground (new tab)" hidden id="noetix_n2" data-name="noetix_n2"><img src="assets/robots/noetix_n2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Noetix N2</span></a>
+        <div class="robot-card" hidden id="north_poc2" data-name="north_poc2"><img src="assets/robots/north_poc2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>North POC2</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=northwestern_humanoid" target="_blank" rel="noopener noreferrer" aria-label="Open Northwestern Humanoid in the playground (new tab)" hidden id="northwestern_humanoid" data-name="northwestern_humanoid"><img src="assets/robots/northwestern_humanoid.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Northwestern Humanoid</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=nova_carter" target="_blank" rel="noopener noreferrer" aria-label="Open Nova Carter in the playground (new tab)" hidden id="nova_carter" data-name="nova_carter"><img src="assets/robots/nova_carter.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Nova Carter</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=nvidia_kaya" target="_blank" rel="noopener noreferrer" aria-label="Open Nvidia Kaya in the playground (new tab)" hidden id="nvidia_kaya" data-name="nvidia_kaya"><img src="assets/robots/nvidia_kaya.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Nvidia Kaya</span></a>
+        <div class="robot-card" hidden id="olympus" data-name="olympus"><img src="assets/robots/olympus.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>OLYMPUS</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=openarm" target="_blank" rel="noopener noreferrer" aria-label="Open Openarm in the playground (new tab)" hidden id="openarm" data-name="openarm"><img src="assets/robots/openarm.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Openarm</span></a>
+        <div class="robot-card" hidden id="openflex" data-name="openflex"><img src="assets/robots/openflex.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>OpenFleX</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=openloong" target="_blank" rel="noopener noreferrer" aria-label="Open Openloong in the playground (new tab)" hidden id="openloong" data-name="openloong"><img src="assets/robots/openloong.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Openloong</span></a>
+        <div class="robot-card" hidden id="orion" data-name="orion"><img src="assets/robots/orion.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Orion</span></div>
+        <div class="robot-card" hidden id="p0" data-name="p0"><img src="assets/robots/p0.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>P0</span></div>
+        <div class="robot-card" hidden id="pamy2" data-name="pamy2"><img src="assets/robots/pamy2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>PAMY2</span></div>
+        <div class="robot-card" hidden id="paws" data-name="paws"><img src="assets/robots/paws.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>PAWS</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=pepper" target="_blank" rel="noopener noreferrer" aria-label="Open Pepper in the playground (new tab)" hidden id="pepper" data-name="pepper"><img src="assets/robots/pepper.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Pepper</span></a>
+        <div class="robot-card" hidden id="pingu" data-name="pingu"><img src="assets/robots/pingu.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>PINGU</span></div>
+        <div class="robot-card" hidden id="pleurobot" data-name="pleurobot"><img src="assets/robots/pleurobot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Pleurobot</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=poppy_ergo_jr" target="_blank" rel="noopener noreferrer" aria-label="Open Poppy Ergo Jr in the playground (new tab)" hidden id="poppy_ergo_jr" data-name="poppy_ergo_jr"><img src="assets/robots/poppy_ergo_jr.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Poppy Ergo Jr</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=poppy_humanoid" target="_blank" rel="noopener noreferrer" aria-label="Open Poppy Humanoid in the playground (new tab)" hidden id="poppy_humanoid" data-name="poppy_humanoid"><img src="assets/robots/poppy_humanoid.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Poppy Humanoid</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=pr2" target="_blank" rel="noopener noreferrer" aria-label="Open Pr2 in the playground (new tab)" hidden id="pr2" data-name="pr2"><img src="assets/robots/pr2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Pr2</span></a>
+        <div class="robot-card" hidden id="pupper_v3" data-name="pupper_v3"><img src="assets/robots/pupper_v3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Pupper V3</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=qmini" target="_blank" rel="noopener noreferrer" aria-label="Open Qmini in the playground (new tab)" hidden id="qmini" data-name="qmini"><img src="assets/robots/qmini.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Qmini</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=rainbow_rby1" target="_blank" rel="noopener noreferrer" aria-label="Open Rainbow Rby1 in the playground (new tab)" hidden id="rainbow_rby1" data-name="rainbow_rby1"><img src="assets/robots/rainbow_rby1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Rainbow Rby1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=rbq10" target="_blank" rel="noopener noreferrer" aria-label="Open Rainbow Robotics RBQ10 in the playground (new tab)" hidden id="rbq10" data-name="rbq10"><img src="assets/robots/rbq10.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Rainbow Robotics RBQ10</span></a>
+        <div class="robot-card" hidden id="raph_rover" data-name="raph_rover"><img src="assets/robots/raph_rover.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Raph Rover</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=reachy" target="_blank" rel="noopener noreferrer" aria-label="Open Reachy in the playground (new tab)" hidden id="reachy" data-name="reachy"><img src="assets/robots/reachy.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Reachy</span></a>
+        <div class="robot-card" hidden id="realman_realbot_01" data-name="realman_realbot_01"><img src="assets/robots/realman_realbot_01.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>RealMan RealBot-01</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=rethink_sawyer" target="_blank" rel="noopener noreferrer" aria-label="Open Rethink Sawyer in the playground (new tab)" hidden id="rethink_sawyer" data-name="rethink_sawyer"><img src="assets/robots/rethink_sawyer.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Rethink Sawyer</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=rh5" target="_blank" rel="noopener noreferrer" aria-label="Open Rh5 in the playground (new tab)" hidden id="rh5" data-name="rh5"><img src="assets/robots/rh5.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Rh5</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=rhea" target="_blank" rel="noopener noreferrer" aria-label="Open Rhea in the playground (new tab)" hidden id="rhea" data-name="rhea"><img src="assets/robots/rhea.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Rhea</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ridgeback_franka" target="_blank" rel="noopener noreferrer" aria-label="Open Ridgeback Franka in the playground (new tab)" hidden id="ridgeback_franka" data-name="ridgeback_franka"><img src="assets/robots/ridgeback_franka.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ridgeback Franka</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ridgeback_ur5" target="_blank" rel="noopener noreferrer" aria-label="Open Ridgeback Ur5 in the playground (new tab)" hidden id="ridgeback_ur5" data-name="ridgeback_ur5"><img src="assets/robots/ridgeback_ur5.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ridgeback Ur5</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=robonaut_2" target="_blank" rel="noopener noreferrer" aria-label="Open Robonaut 2 in the playground (new tab)" hidden id="robonaut_2" data-name="robonaut_2"><img src="assets/robots/robonaut_2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Robonaut 2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=roboparty_atom01" target="_blank" rel="noopener noreferrer" aria-label="Open Roboparty Atom01 in the playground (new tab)" hidden id="roboparty_atom01" data-name="roboparty_atom01"><img src="assets/robots/roboparty_atom01.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Roboparty Atom01</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=robot_soccer_kit" target="_blank" rel="noopener noreferrer" aria-label="Open Robot Soccer Kit in the playground (new tab)" hidden id="robot_soccer_kit" data-name="robot_soccer_kit"><img src="assets/robots/robot_soccer_kit.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Robot Soccer Kit</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=robotera_xbot" target="_blank" rel="noopener noreferrer" aria-label="Open Robotera Xbot in the playground (new tab)" hidden id="robotera_xbot" data-name="robotera_xbot"><img src="assets/robots/robotera_xbot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Robotera Xbot</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=robotis_ffw" target="_blank" rel="noopener noreferrer" aria-label="Open Robotis Ffw in the playground (new tab)" hidden id="robotis_ffw" data-name="robotis_ffw"><img src="assets/robots/robotis_ffw.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Robotis Ffw</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=robotis_k1" target="_blank" rel="noopener noreferrer" aria-label="Open ROBOTIS K1 in the playground (new tab)" hidden id="robotis_k1" data-name="robotis_k1"><img src="assets/robots/robotis_k1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>ROBOTIS K1</span></a>
+        <div class="robot-card" hidden id="robotis_omy_3m" data-name="robotis_omy_3m"><img src="assets/robots/robotis_omy_3m.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>ROBOTIS OMY-3M</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=robotis_op3" target="_blank" rel="noopener noreferrer" aria-label="Open Robotis Op3 in the playground (new tab)" hidden id="robotis_op3" data-name="robotis_op3"><img src="assets/robots/robotis_op3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Robotis Op3</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=robotis_open_manipulator" target="_blank" rel="noopener noreferrer" aria-label="Open ROBOTIS OpenMANIPULATOR-X in the playground (new tab)" hidden id="robotis_open_manipulator" data-name="robotis_open_manipulator"><img src="assets/robots/robotis_open_manipulator.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>ROBOTIS OpenMANIPULATOR-X</span></a>
+        <div class="robot-card" hidden id="robotis_thormang3" data-name="robotis_thormang3"><img src="assets/robots/robotis_thormang3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>ROBOTIS THORMANG3</span></div>
+        <div class="robot-card" hidden id="igris_c" data-name="igris_c"><img src="assets/robots/igris_c.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>ROBROS IGRIS-C</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=romeo" target="_blank" rel="noopener noreferrer" aria-label="Open Romeo in the playground (new tab)" hidden id="romeo" data-name="romeo"><img src="assets/robots/romeo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Romeo</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=sanctuary_phoenix" target="_blank" rel="noopener noreferrer" aria-label="Open Sanctuary Phoenix in the playground (new tab)" hidden id="sanctuary_phoenix" data-name="sanctuary_phoenix"><img src="assets/robots/sanctuary_phoenix.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Sanctuary Phoenix</span></a>
+        <div class="robot-card" hidden id="sanity" data-name="sanity"><img src="assets/robots/sanity.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Sanity</span></div>
+        <div class="robot-card" hidden id="sanity_ctbr" data-name="sanity_ctbr"><img src="assets/robots/sanity_ctbr.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Sanity CTBR</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=seeed_rebot_devarm" target="_blank" rel="noopener noreferrer" aria-label="Open Seeed Rebot Devarm in the playground (new tab)" hidden id="seeed_rebot_devarm" data-name="seeed_rebot_devarm"><img src="assets/robots/seeed_rebot_devarm.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Seeed Rebot Devarm</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=seribot" target="_blank" rel="noopener noreferrer" aria-label="Open seriBot in the playground (new tab)" hidden id="seribot" data-name="seribot"><img src="assets/robots/seribot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>seriBot</span></a>
+        <div class="robot-card" hidden id="sh_humanoid" data-name="sh_humanoid"><img src="assets/robots/sh_humanoid.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>SH Humanoid</span></div>
+        <div class="robot-card" hidden id="shelfy" data-name="shelfy"><img src="assets/robots/shelfy.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Shelfy</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=sigmaban" target="_blank" rel="noopener noreferrer" aria-label="Open Sigmaban in the playground (new tab)" hidden id="sigmaban" data-name="sigmaban"><img src="assets/robots/sigmaban.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Sigmaban</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=silver_badger" target="_blank" rel="noopener noreferrer" aria-label="Open Silver Badger in the playground (new tab)" hidden id="silver_badger" data-name="silver_badger"><img src="assets/robots/silver_badger.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Silver Badger</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=skydio_x2" target="_blank" rel="noopener noreferrer" aria-label="Open Skydio X2 in the playground (new tab)" hidden id="skydio_x2" data-name="skydio_x2"><img src="assets/robots/skydio_x2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Skydio X2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=snake" target="_blank" rel="noopener noreferrer" aria-label="Open Snake in the playground (new tab)" hidden id="snake" data-name="snake"><img src="assets/robots/snake.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Snake</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=so101" target="_blank" rel="noopener noreferrer" aria-label="Open So101 in the playground (new tab)" hidden id="so101" data-name="so101"><img src="assets/robots/so101.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>So101</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=solo12" target="_blank" rel="noopener noreferrer" aria-label="Open Solo12 in the playground (new tab)" hidden id="solo12" data-name="solo12"><img src="assets/robots/solo12.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Solo12</span></a>
+        <div class="robot-card" hidden id="spacer_floating_platform" data-name="spacer_floating_platform"><img src="assets/robots/spacer_floating_platform.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>SpaceR Floating Platform</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=spot" target="_blank" rel="noopener noreferrer" aria-label="Open Spot in the playground (new tab)" hidden id="spot" data-name="spot"><img src="assets/robots/spot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Spot</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=spot_mini" target="_blank" rel="noopener noreferrer" aria-label="Open Spot Mini in the playground (new tab)" hidden id="spot_mini" data-name="spot_mini"><img src="assets/robots/spot_mini.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Spot Mini</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=spot_with_arm" target="_blank" rel="noopener noreferrer" aria-label="Open Spot With Arm in the playground (new tab)" hidden id="spot_with_arm" data-name="spot_with_arm"><img src="assets/robots/spot_with_arm.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Spot With Arm</span></a>
+        <div class="robot-card" hidden id="sprite" data-name="sprite"><img src="assets/robots/sprite.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Sprite</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=spryped" target="_blank" rel="noopener noreferrer" aria-label="Open Spryped in the playground (new tab)" hidden id="spryped" data-name="spryped"><img src="assets/robots/spryped.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Spryped</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=stanford_tidybot" target="_blank" rel="noopener noreferrer" aria-label="Open Stanford Tidybot in the playground (new tab)" hidden id="stanford_tidybot" data-name="stanford_tidybot"><img src="assets/robots/stanford_tidybot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Stanford Tidybot</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=star1" target="_blank" rel="noopener noreferrer" aria-label="Open Star1 in the playground (new tab)" hidden id="star1" data-name="star1"><img src="assets/robots/star1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Star1</span></a>
+        <div class="robot-card" hidden id="starling_2_ctbr" data-name="starling_2_ctbr"><img src="assets/robots/starling_2_ctbr.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Starling 2 CTBR</span></div>
+        <div class="robot-card" hidden id="starling_2_max" data-name="starling_2_max"><img src="assets/robots/starling_2_max.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Starling 2 Max</span></div>
+        <div class="robot-card" hidden id="starling_2_max_ctbr" data-name="starling_2_max_ctbr"><img src="assets/robots/starling_2_max_ctbr.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Starling 2 Max CTBR</span></div>
+        <div class="robot-card" hidden id="starling_2_max_ctbr_gripper" data-name="starling_2_max_ctbr_gripper"><img src="assets/robots/starling_2_max_ctbr_gripper.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Starling 2 Max CTBR Gripper</span></div>
+        <div class="robot-card" hidden id="sustaina_op" data-name="sustaina_op"><img src="assets/robots/sustaina_op.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>SUSTAINA-OP</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=talos" target="_blank" rel="noopener noreferrer" aria-label="Open Talos in the playground (new tab)" hidden id="talos" data-name="talos"><img src="assets/robots/talos.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Talos</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=techman_tm12" target="_blank" rel="noopener noreferrer" aria-label="Open Techman Tm12 in the playground (new tab)" hidden id="techman_tm12" data-name="techman_tm12"><img src="assets/robots/techman_tm12.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Techman Tm12</span></a>
+        <div class="robot-card" hidden id="terrasentia_pp_lite6" data-name="terrasentia_pp_lite6"><img src="assets/robots/terrasentia_pp_lite6.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Terra++ Lite 6</span></div>
+        <div class="robot-card" hidden id="terrasentia" data-name="terrasentia"><img src="assets/robots/terrasentia.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>TerraSentia</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=tiago" target="_blank" rel="noopener noreferrer" aria-label="Open Tiago in the playground (new tab)" hidden id="tiago" data-name="tiago"><img src="assets/robots/tiago.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Tiago</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=tiago_dual" target="_blank" rel="noopener noreferrer" aria-label="Open Tiago Dual in the playground (new tab)" hidden id="tiago_dual" data-name="tiago_dual"><img src="assets/robots/tiago_dual.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Tiago Dual</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=tiago_pro" target="_blank" rel="noopener noreferrer" aria-label="Open TIAGo Pro in the playground (new tab)" hidden id="tiago_pro" data-name="tiago_pro"><img src="assets/robots/tiago_pro.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>TIAGo Pro</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=toddlerbot" target="_blank" rel="noopener noreferrer" aria-label="Open Toddlerbot in the playground (new tab)" hidden id="toddlerbot" data-name="toddlerbot"><img src="assets/robots/toddlerbot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Toddlerbot</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=torobo2" target="_blank" rel="noopener noreferrer" aria-label="Open Tokyo Robotics Torobo2 in the playground (new tab)" hidden id="torobo2" data-name="torobo2"><img src="assets/robots/torobo2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Tokyo Robotics Torobo2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=tom_hexapod" target="_blank" rel="noopener noreferrer" aria-label="Open Tom Hexapod in the playground (new tab)" hidden id="tom_hexapod" data-name="tom_hexapod"><img src="assets/robots/tom_hexapod.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Tom Hexapod</span></a>
+        <div class="robot-card" hidden id="triton_humanoid" data-name="triton_humanoid"><img src="assets/robots/triton_humanoid.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Triton Humanoid</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=tron1" target="_blank" rel="noopener noreferrer" aria-label="Open Tron1 in the playground (new tab)" hidden id="tron1" data-name="tron1"><img src="assets/robots/tron1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Tron1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=trossen_vx300s" target="_blank" rel="noopener noreferrer" aria-label="Open Trossen Vx300s in the playground (new tab)" hidden id="trossen_vx300s" data-name="trossen_vx300s"><img src="assets/robots/trossen_vx300s.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Trossen Vx300s</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=trossen_wx250s" target="_blank" rel="noopener noreferrer" aria-label="Open Trossen Wx250s in the playground (new tab)" hidden id="trossen_wx250s" data-name="trossen_wx250s"><img src="assets/robots/trossen_wx250s.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Trossen Wx250s</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=trossen_wxai_biarm" target="_blank" rel="noopener noreferrer" aria-label="Open Trossen Wxai Biarm in the playground (new tab)" hidden id="trossen_wxai_biarm" data-name="trossen_wxai_biarm"><img src="assets/robots/trossen_wxai_biarm.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Trossen Wxai Biarm</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=trossen_wxai_follower" target="_blank" rel="noopener noreferrer" aria-label="Open Trossen Wxai Follower in the playground (new tab)" hidden id="trossen_wxai_follower" data-name="trossen_wxai_follower"><img src="assets/robots/trossen_wxai_follower.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Trossen Wxai Follower</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=trs_so_arm100" target="_blank" rel="noopener noreferrer" aria-label="Open Trs So Arm100 in the playground (new tab)" hidden id="trs_so_arm100" data-name="trs_so_arm100"><img src="assets/robots/trs_so_arm100.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Trs So Arm100</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=turtlebot3" target="_blank" rel="noopener noreferrer" aria-label="Open Turtlebot3 in the playground (new tab)" hidden id="turtlebot3" data-name="turtlebot3"><img src="assets/robots/turtlebot3.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Turtlebot3</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=walker_s2" target="_blank" rel="noopener noreferrer" aria-label="Open UBTECH Walker S2 in the playground (new tab)" hidden id="walker_s2" data-name="walker_s2"><img src="assets/robots/walker_s2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>UBTECH Walker S2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ufactory_lite6" target="_blank" rel="noopener noreferrer" aria-label="Open Ufactory Lite6 in the playground (new tab)" hidden id="ufactory_lite6" data-name="ufactory_lite6"><img src="assets/robots/ufactory_lite6.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ufactory Lite6</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ufactory_xarm7" target="_blank" rel="noopener noreferrer" aria-label="Open Ufactory Xarm7 in the playground (new tab)" hidden id="ufactory_xarm7" data-name="ufactory_xarm7"><img src="assets/robots/ufactory_xarm7.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ufactory Xarm7</span></a>
+        <div class="robot-card" hidden id="ulixarm" data-name="ulixarm"><img src="assets/robots/ulixarm.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Ulixarm</span></div>
+        <div class="robot-card" hidden id="umass_humanoid" data-name="umass_humanoid"><img src="assets/robots/umass_humanoid.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>UMass Humanoid</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=uniarm_l1" target="_blank" rel="noopener noreferrer" aria-label="Open Uniarm L1 in the playground (new tab)" hidden id="uniarm_l1" data-name="uniarm_l1"><img src="assets/robots/uniarm_l1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Uniarm L1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_a1" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree A1 in the playground (new tab)" hidden id="unitree_a1" data-name="unitree_a1"><img src="assets/robots/unitree_a1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree A1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_a2" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree A2 in the playground (new tab)" hidden id="unitree_a2" data-name="unitree_a2"><img src="assets/robots/unitree_a2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree A2</span></a>
+        <div class="robot-card" hidden id="unitree_aliengo" data-name="unitree_aliengo"><img src="assets/robots/unitree_aliengo.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree Aliengo</span></div>
+        <div class="robot-card" hidden id="unitree_as2" data-name="unitree_as2"><img src="assets/robots/unitree_as2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree AS2</span></div>
+        <div class="robot-card" hidden id="unitree_as2w" data-name="unitree_as2w"><img src="assets/robots/unitree_as2w.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree AS2-W</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_b1" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree B1 in the playground (new tab)" hidden id="unitree_b1" data-name="unitree_b1"><img src="assets/robots/unitree_b1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree B1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_b2" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree B2 in the playground (new tab)" hidden id="unitree_b2" data-name="unitree_b2"><img src="assets/robots/unitree_b2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree B2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_b2w" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree B2w in the playground (new tab)" hidden id="unitree_b2w" data-name="unitree_b2w"><img src="assets/robots/unitree_b2w.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree B2w</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_g1" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree G1 in the playground (new tab)" hidden id="unitree_g1" data-name="unitree_g1"><img src="assets/robots/unitree_g1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree G1</span></a>
+        <div class="robot-card" hidden id="unitree_g1_d" data-name="unitree_g1_d"><img src="assets/robots/unitree_g1_d.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree G1-D</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_go1" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree Go1 in the playground (new tab)" hidden id="unitree_go1" data-name="unitree_go1"><img src="assets/robots/unitree_go1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree Go1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_go2" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree Go2 in the playground (new tab)" hidden id="unitree_go2" data-name="unitree_go2"><img src="assets/robots/unitree_go2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree Go2</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_go2w" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree Go2W in the playground (new tab)" hidden id="unitree_go2w" data-name="unitree_go2w"><img src="assets/robots/unitree_go2w.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree Go2W</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_h1" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree H1 in the playground (new tab)" hidden id="unitree_h1" data-name="unitree_h1"><img src="assets/robots/unitree_h1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree H1</span></a>
+        <div class="robot-card" hidden id="unitree_h1_2" data-name="unitree_h1_2"><img src="assets/robots/unitree_h1_2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree H1-2</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_h2" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree H2 in the playground (new tab)" hidden id="unitree_h2" data-name="unitree_h2"><img src="assets/robots/unitree_h2.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree H2</span></a>
+        <div class="robot-card" hidden id="unitree_h2_d" data-name="unitree_h2_d"><img src="assets/robots/unitree_h2_d.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree H2-D</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_r1" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree R1 in the playground (new tab)" hidden id="unitree_r1" data-name="unitree_r1"><img src="assets/robots/unitree_r1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree R1</span></a>
+        <div class="robot-card" hidden id="unitree_r1_d" data-name="unitree_r1_d"><img src="assets/robots/unitree_r1_d.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree R1-D</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=unitree_z1" target="_blank" rel="noopener noreferrer" aria-label="Open Unitree Z1 in the playground (new tab)" hidden id="unitree_z1" data-name="unitree_z1"><img src="assets/robots/unitree_z1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Unitree Z1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=upkie" target="_blank" rel="noopener noreferrer" aria-label="Open Upkie in the playground (new tab)" hidden id="upkie" data-name="upkie"><img src="assets/robots/upkie.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Upkie</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ur3e" target="_blank" rel="noopener noreferrer" aria-label="Open UR3E in the playground (new tab)" hidden id="ur3e" data-name="ur3e"><img src="assets/robots/ur3e.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>UR3E</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ur5e" target="_blank" rel="noopener noreferrer" aria-label="Open UR5E in the playground (new tab)" hidden id="ur5e" data-name="ur5e"><img src="assets/robots/ur5e.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>UR5E</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ur10e" target="_blank" rel="noopener noreferrer" aria-label="Open UR10E in the playground (new tab)" hidden id="ur10e" data-name="ur10e"><img src="assets/robots/ur10e.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>UR10E</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ur16e" target="_blank" rel="noopener noreferrer" aria-label="Open UR16E in the playground (new tab)" hidden id="ur16e" data-name="ur16e"><img src="assets/robots/ur16e.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>UR16E</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ur20" target="_blank" rel="noopener noreferrer" aria-label="Open UR20 in the playground (new tab)" hidden id="ur20" data-name="ur20"><img src="assets/robots/ur20.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>UR20</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=ur30" target="_blank" rel="noopener noreferrer" aria-label="Open UR30 in the playground (new tab)" hidden id="ur30" data-name="ur30"><img src="assets/robots/ur30.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>UR30</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=valkyrie" target="_blank" rel="noopener noreferrer" aria-label="Open Valkyrie in the playground (new tab)" hidden id="valkyrie" data-name="valkyrie"><img src="assets/robots/valkyrie.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Valkyrie</span></a>
+        <div class="robot-card" hidden id="vr_m3_1" data-name="vr_m3_1"><img src="assets/robots/vr_m3_1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>VinRobotics VR M3.1</span></div>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=walkman" target="_blank" rel="noopener noreferrer" aria-label="Open WALK-MAN in the playground (new tab)" hidden id="walkman" data-name="walkman"><img src="assets/robots/walkman.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>WALK-MAN</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=xgomini" target="_blank" rel="noopener noreferrer" aria-label="Open Xgomini in the playground (new tab)" hidden id="xgomini" data-name="xgomini"><img src="assets/robots/xgomini.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Xgomini</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=xhumanoid_tienkung" target="_blank" rel="noopener noreferrer" aria-label="Open Xhumanoid Tienkung in the playground (new tab)" hidden id="xhumanoid_tienkung" data-name="xhumanoid_tienkung"><img src="assets/robots/xhumanoid_tienkung.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Xhumanoid Tienkung</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=xiaopeng_px5" target="_blank" rel="noopener noreferrer" aria-label="Open Xiaopeng Px5 in the playground (new tab)" hidden id="xiaopeng_px5" data-name="xiaopeng_px5"><img src="assets/robots/xiaopeng_px5.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Xiaopeng Px5</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=yumi" target="_blank" rel="noopener noreferrer" aria-label="Open Yumi in the playground (new tab)" hidden id="yumi" data-name="yumi"><img src="assets/robots/yumi.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Yumi</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=zbot" target="_blank" rel="noopener noreferrer" aria-label="Open Zbot in the playground (new tab)" hidden id="zbot" data-name="zbot"><img src="assets/robots/zbot.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Zbot</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=zhinao_l4w4" target="_blank" rel="noopener noreferrer" aria-label="Open Zhinao L4w4 in the playground (new tab)" hidden id="zhinao_l4w4" data-name="zhinao_l4w4"><img src="assets/robots/zhinao_l4w4.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Zhinao L4w4</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=zsibot_zsl1" target="_blank" rel="noopener noreferrer" aria-label="Open Zsibot Zsl1 in the playground (new tab)" hidden id="zsibot_zsl1" data-name="zsibot_zsl1"><img src="assets/robots/zsibot_zsl1.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Zsibot Zsl1</span></a>
+        <a class="robot-card" href="https://play.gamma-zero.com/?robot=zsibot_zsl1w" target="_blank" rel="noopener noreferrer" aria-label="Open Zsibot Zsl1w in the playground (new tab)" hidden id="zsibot_zsl1w" data-name="zsibot_zsl1w"><img src="assets/robots/zsibot_zsl1w.webp" alt="" width="512" height="512" loading="lazy" decoding="async"><span>Zsibot Zsl1w</span></a>
+      </div>
+      <p class="gallery-empty" hidden>No matching robots.</p>
+      <button class="collection-toggle collection-toggle-bottom" type="button" aria-expanded="false" aria-controls="robot-collection" hidden>Show fewer robots <span aria-hidden="true">↑</span></button>
+    </section>
+
+    <section class="section contribution-section" id="contribute" aria-labelledby="contribute-title">
+      <div class="contribution-panel">
+        <div class="contribution-copy">
+          <p class="eyebrow">05 / BUILD WITH US</p>
+          <h2 id="contribute-title">Contribute to <span class="gamma-mark contribution-mark" role="img" aria-label="gamma zero"><span class="gamma-letter">γ</span><sub>0</sub></span></h2>
+          <p class="contribution-intro">Help us build a foundation motion policy that transfers across robots on the ground and in the air, with wheels, legs or rotors, supported by the largest open-source robot collection.</p>
+          <p class="contribution-credit">We have two ways for you to get involved!</p>
+          <p class="contribution-contact">Contact us at <a href="mailto:contribute@gamma-zero.com">contribute@gamma-zero.com</a> until <strong><time datetime="2026-10-15">October 15</time></strong>.</p>
+          <p class="contribution-credit">We’ll publish the policy and robot collection shortly after.</p>
+        </div>
+
+        <div class="contribution-paths">
+          <div><span>A.</span><h3>Contribute your robot model</h3><p>Share a valid URDF for a real-world robot that we can simulate with MuJoCo, including meshes, inertial parameters, joint limits, and actuator torque and velocity limits. Accepted models will become part of the open-source collection, and contributors will be cited or acknowledged. We welcome legged robots, wheeled robots, manipulators and drones. Standalone robot hands are outside the scope of this collection.</p></div>
+          <div><span>B.</span><h3>Train and deploy with us</h3><p>Collaborate with us to extend the training pipeline and deploy γ₀ on new hardware. Contributions spanning both training and real-world deployment may qualify for authorship.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section team-section" id="team" aria-labelledby="team-title">
+      <div class="section-heading">
+        <p class="eyebrow">06 / THE PEOPLE BEHIND THE POLICY</p>
+        <h2 id="team-title">Many perspectives.<br><em>One shared pursuit.</em></h2>
+      </div>
+
+      <div class="team-grid research-team-grid">
+        <a class="team-card" href="https://www.ias.informatik.tu-darmstadt.de/Team/NicoBohlinger" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait nico-portrait"><img src="assets/team/nico-bohlinger-golden-gate.webp" alt="" width="960" height="1280" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3 class="team-name-line">Nico Bohlinger <span class="team-role">Co-lead</span></h3><p>TU Darmstadt</p></div>
+        </a>
+        <a class="team-card" href="https://albertboai.com/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait bo-portrait"><img src="assets/team/bo-ai.webp" alt="" width="346" height="346" loading="lazy"></div>
+          <div class="team-card-copy"><h3 class="team-name-line">Bo Ai <span class="team-role">Co-lead</span></h3><p>Stanford University</p></div>
+        </a>
+        <a class="team-card" href="https://dichen-li.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait dichen-portrait"><img src="assets/team/dichen-li.webp" alt="" width="700" height="714" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Dichen Li</h3><p>UC San Diego</p></div>
+        </a>
+        <a class="team-card" href="https://cseweb.ucsd.edu/~t3mu/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait tongzhou-portrait"><img src="assets/team/tongzhou-mu-profile.webp" alt="" width="400" height="400" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Tongzhou Mu</h3><p>Rhoda AI</p></div>
+        </a>
+        <a class="team-card" href="https://pearl-lab.com/people/sophie-lueth/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait sophie-portrait"><img src="assets/team/sophie-lueth.webp" alt="" width="1000" height="1000" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Sophie Lueth</h3><p>TU Darmstadt</p></div>
+        </a>
+        <a class="team-card" href="https://www.ias.informatik.tu-darmstadt.de/Team/NicolasHahn" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait nicolas-portrait"><img src="assets/team/nicolas-hahn-20261014.webp" alt="" width="800" height="800" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Nicolas Hahn</h3><p>TU Darmstadt</p></div>
+        </a>
+        <a class="team-card" href="https://msl.stanford.edu/people/johntucker" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/john-tucker.webp" alt="" width="1050" height="700" loading="lazy"></div>
+          <div class="team-card-copy"><h3>John Tucker</h3><p>Stanford University</p></div>
+        </a>
+        <a class="team-card" href="https://breadli428.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/chenhao-li.webp" alt="" width="700" height="700" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Chenhao Li</h3><p>ETH Zurich</p></div>
+        </a>
+        <a class="team-card" href="https://www.ri.cmu.edu/ri-people/yutong-wang/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/yutong-wang.webp" alt="" width="640" height="640" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Yutong Wang</h3><p>Carnegie Mellon University</p></div>
+        </a>
+        <a class="team-card" href="https://isgeles.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/ismail-geles.webp" alt="" width="431" height="511" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Ismail Geles</h3><p>University of Zurich</p></div>
+        </a>
+        <a class="team-card" href="https://tongxuan259.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/tongxuan-tian.webp" alt="" width="640" height="640" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Tongxuan Tian</h3><p>University of Southern California</p></div>
+        </a>
+        <a class="team-card" href="https://hongyijing.me/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/hongyi-jing.webp" alt="" width="768" height="726" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Hongyi Jing</h3><p>University of Southern California</p></div>
+        </a>
+        <a class="team-card" href="https://web.stanford.edu/~jksun/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/jiankai-sun.webp" alt="" width="640" height="640" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Jiankai Sun</h3><p>Stanford University</p></div>
+        </a>
+        <a class="team-card" href="https://dotandung.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/tan-dzung-do.webp" alt="" width="640" height="640" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Tan-Dzung Do</h3><p>VinRobotics</p></div>
+        </a>
+        <a class="team-card" href="https://www.linkedin.com/in/lu-l-22b15b199/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/lu-liu.webp" alt="" width="640" height="640" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Lu Liu</h3><p>LimX Dynamics</p></div>
+        </a>
+        <a class="team-card" href="https://faffonso.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait francisco-affonso-portrait"><img src="assets/team/francisco-affonso.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Francisco Affonso</h3><p>University of Illinois Urbana-Champaign</p></div>
+        </a>
+        <a class="team-card" href="https://www.ntnu.edu/employees/welf.rehberg" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait welf-rehberg-portrait"><img src="assets/team/welf-rehberg.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Welf Rehberg</h3><p>NTNU</p></div>
+        </a>
+        <a class="team-card" href="https://mohit505git.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait mohit-singh-portrait"><img src="assets/team/mohit-singh.webp" alt="" width="336" height="336" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Mohit Singh</h3><p>NTNU</p></div>
+        </a>
+        <a class="team-card" href="https://www.ntnu.edu/employees/grzegorz.malczyk" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait grzegorz-malczyk-portrait"><img src="assets/team/grzegorz-malczyk.webp" alt="" width="500" height="500" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Grzegorz Malczyk</h3><p>NTNU</p></div>
+        </a>
+        <a class="team-card" href="https://calumarnott.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait calum-arnott-portrait"><img src="assets/team/calum-arnott.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Calum Arnott</h3><p>University of Edinburgh · Heriot-Watt</p></div>
+        </a>
+        <a class="team-card" href="https://rai.site.hw.ac.uk/people/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait sumer-tuncay-portrait"><img src="assets/team/sumer-tuncay.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Sümer Tunçay</h3><p>Heriot-Watt University</p></div>
+        </a>
+        <a class="team-card" href="https://www.proroklab.org/people/peter-woo/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait peter-woo-portrait"><img src="assets/team/peter-woo.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Peter Heedo Woo</h3><p>University of Cambridge</p></div>
+        </a>
+        <a class="team-card" href="https://nl.linkedin.com/in/haroldruiter" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait harold-ruiter-portrait"><img src="assets/team/harold-ruiter.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Harold Ruiter</h3><p>University of Amsterdam · whIRLwind</p></div>
+        </a>
+        <a class="team-card" href="https://tsagkas.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait nikolas-tsagkas-portrait"><img src="assets/team/nikolas-tsagkas.webp" alt="" width="512" height="683" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Nikolas Tsagkas</h3><p>University of Amsterdam</p></div>
+        </a>
+        <a class="team-card" href="https://cps.unileoben.ac.at/muslim-alaran-m-sc/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait muslim-alaran-portrait"><img src="assets/team/muslim-alaran.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Muslim Alaran</h3><p>Montanuniversität Leoben</p></div>
+        </a>
+        <a class="team-card" href="https://hsmmoj.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/hesam-mojtahedi.webp" alt="" width="239" height="239" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Hesam Mojtahedi</h3><p>UC San Diego</p></div>
+        </a>
+        <a class="team-card" href="https://elharirymatteo.github.io/index.html" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait matteo-el-hariry-portrait"><img src="assets/team/matteo-el-hariry.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Matteo El Hariry</h3><p>University of Luxembourg</p></div>
+        </a>
+        <a class="team-card" href="https://www.uni.lu/snt-en/people/ricard-marsal-i-castan" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait ricard-marsal-portrait"><img src="assets/team/ricard-marsal.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Ricard Marsal i Castan</h3><p>University of Luxembourg</p></div>
+        </a>
+        <a class="team-card" href="https://msl.stanford.edu/people/hojunekim" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait hojune-kim-portrait"><img src="assets/team/hojune-kim.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Hojune Kim</h3><p>Stanford University</p></div>
+        </a>
+        <a class="team-card" href="https://hcr.cs.umass.edu/people.html" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait williard-joshua-jose-portrait"><img src="assets/team/williard-joshua-jose.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Williard Joshua Jose</h3><p>UMass Amherst</p></div>
+        </a>
+        <a class="team-card" href="https://shangqunyu.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait shangqun-yu-portrait"><img src="assets/team/shangqun-yu.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Shangqun (Simon) Yu</h3><p>UMass Amherst</p></div>
+        </a>
+        <a class="team-card" href="https://github.com/rantaluca" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait robert-antaluca-portrait"><img src="assets/team/robert-antaluca.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Robert Antaluca</h3><p>Inria · HUCEBOT</p></div>
+        </a>
+        <a class="team-card" href="https://dtotsila.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait dionis-totsila-portrait"><img src="assets/team/dionis-totsila.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Dionis Totsila</h3><p>Inria · HUCEBOT</p></div>
+        </a>
+        <a class="team-card" href="https://www.ptsingamaneni.com/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait phani-teja-singamaneni-portrait"><img src="assets/team/phani-teja-singamaneni.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Phani-Teja Singamaneni</h3><p>Inria · HUCEBOT</p></div>
+        </a>
+      </div>
+
+      <h3 class="team-group-label model-contributors-label" id="model-contributors">Robot model contributors</h3>
+      <div class="team-grid model-team-grid">
+        <a class="team-card" href="https://laboratoriolemur.cl/equipo/pr-ulisesc/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait ulises-campodonico-portrait"><img src="assets/team/ulises-campodonico.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Ulises Campodónico</h3><p>Universidad de Chile · KTH</p><p class="team-model">KiLTRO</p></div>
+        </a>
+        <a class="team-card" href="https://github.com/greenvla/GreenSim" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait portrait-placeholder" aria-hidden="true">AS</div>
+          <div class="team-card-copy"><h3>Aleksandr Semochkin</h3><p>Green robot</p><p class="team-model">Green</p></div>
+        </a>
+        <a class="team-card" href="https://hsp.iit.it/people-details/-/people/stefano-berti" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait stefano-berti-portrait"><img src="assets/team/stefano-berti.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Stefano Berti</h3><p>Istituto Italiano di Tecnologia</p><p class="team-model">R1 Mk3</p></div>
+        </a>
+        <a class="team-card" href="https://cgrhyu.github.io/people/minsu-kim.html" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait minsu-kim-portrait"><img src="assets/team/minsu-kim.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Minsu Kim</h3><p>ROBROS</p><p class="team-model">IGRIS-C</p></div>
+        </a>
+        <a class="team-card" href="https://robotsforaging.cs.unh.edu/?page_id=1070" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait ola-ghattas-portrait"><img src="assets/team/ola-ghattas.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Ola Ghattas</h3><p>Hello Robot</p><p class="team-model">Stretch 4</p></div>
+        </a>
+        <a class="team-card" href="https://github.com/joshuajerin" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait joshua-jerin-portrait"><img src="assets/team/joshua-jerin.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Joshua Jerin</h3><p>University of Cincinnati</p><p class="team-model">Kural</p></div>
+        </a>
+      </div>
+
+      <p class="team-group-label faculty-label">Advisors</p>
+      <div class="team-grid faculty-team-grid">
+        <a class="team-card" href="https://www.ias.informatik.tu-darmstadt.de/Team/JanPeters" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait jan-portrait"><img src="assets/team/jan-peters.webp" alt="" width="700" height="700" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Jan Peters</h3><p>TU Darmstadt</p></div>
+        </a>
+        <a class="team-card" href="https://ai.stanford.edu/~cbfinn/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait chelsea-portrait"><img src="assets/team/chelsea-finn.webp" alt="" width="700" height="659" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Chelsea Finn</h3><p>Stanford University</p></div>
+        </a>
+        <a class="team-card" href="https://www.haosu.ai/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait hao-portrait"><img src="assets/team/hao-su.webp" alt="" width="640" height="960" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Hao Su</h3><p>Sudo AI GmbH</p></div>
+        </a>
+        <a class="team-card" href="https://hichristensen.com/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait henrik-portrait"><img src="assets/team/henrik-christensen.webp" alt="" width="527" height="566" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Henrik I. Christensen</h3><p>UC San Diego</p></div>
+        </a>
+        <a class="team-card" href="https://pearl-lab.com/people/georgia-chalvatzaki/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait georgia-portrait"><img src="assets/team/georgia-chalvatzaki.webp" alt="" width="750" height="1000" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Georgia Chalvatzaki</h3><p>TU Darmstadt</p></div>
+        </a>
+        <a class="team-card" href="https://aa.stanford.edu/people/mac-schwager-0" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/mac-schwager-20260917.jpg" alt="" width="960" height="828" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Mac Schwager</h3><p>Stanford University</p></div>
+        </a>
+        <a class="team-card" href="https://rsl.ethz.ch/the-lab/people/person-detail.hutter.html" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/marco-hutter.jpg" alt="" width="752" height="502" loading="lazy"></div>
+          <div class="team-card-copy"><h3>Marco Hutter</h3><p>ETH Zurich</p></div>
+        </a>
+        <a class="team-card" href="https://www.gshi.me/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/guanya-shi.webp?v=20261010-ece" alt="" width="640" height="640" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Guanya Shi</h3><p>Carnegie Mellon University</p></div>
+        </a>
+        <a class="team-card" href="https://rpg.ifi.uzh.ch/people_scaramuzza.html" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait davide-portrait"><img src="assets/team/davide-scaramuzza.webp?v=20261010-ku" alt="" width="960" height="640" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Davide Scaramuzza</h3><p>University of Zurich</p></div>
+        </a>
+        <a class="team-card" href="https://yuewang.xyz/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait yue-portrait"><img src="assets/team/yue-wang.webp" alt="" width="532" height="720" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Yue Wang</h3><p>University of Southern California</p></div>
+        </a>
+        <a class="team-card" href="https://anindex.github.io/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait an-thai-portrait"><img src="assets/team/an-thai-le.webp" alt="" width="538" height="720" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>An Thai Le</h3><p>VinUniversity · VinRobotics</p></div>
+        </a>
+        <a class="team-card" href="https://www.ntnu.no/ansatte/alexisk" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait konstantinos-alexis-portrait"><img src="assets/team/konstantinos-alexis.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Konstantinos Alexis</h3><p>NTNU</p></div>
+        </a>
+        <a class="team-card" href="https://researchportal.hw.ac.uk/en/persons/ignacio-carlucho/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait ignacio-carlucho-portrait"><img src="assets/team/ignacio-carlucho.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Ignacio Carlucho</h3><p>Heriot-Watt University</p></div>
+        </a>
+        <a class="team-card" href="https://idra.unitn.it/author/matteo-saveriano/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait matteo-saveriano-portrait"><img src="assets/team/matteo-saveriano.webp?v=20261014-user" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Matteo Saveriano</h3><p>University of Trento</p></div>
+        </a>
+        <a class="team-card" href="https://www.uni.lu/snt-en/people/miguel-angel-olivares-mendez/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait miguel-olivares-mendez-portrait"><img src="assets/team/miguel-olivares-mendez.webp" alt="" width="512" height="512" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Miguel Olivares-Mendez</h3><p>University of Luxembourg</p></div>
+        </a>
+        <a class="team-card" href="https://members.loria.fr/SIvaldi/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait serena-ivaldi-portrait"><img src="assets/team/serena-ivaldi.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Serena Ivaldi</h3><p>Inria · HUCEBOT</p></div>
+        </a>
+        <a class="team-card" href="https://cps.unileoben.ac.at/prof-elmar-rueckert/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait elmar-rueckert-portrait"><img src="assets/team/elmar-rueckert.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Elmar Rückert</h3><p>Montanuniversität Leoben</p></div>
+        </a>
+        <a class="team-card" href="https://ece.illinois.edu/about/directory/faculty/girishc" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/girish-chowdhary.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Girish Chowdhary</h3><p>University of Illinois Urbana-Champaign</p></div>
+        </a>
+        <a class="team-card" href="https://www.cst.cam.ac.uk/people/asp45" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/amanda-prorok.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Amanda Prorok</h3><p>University of Cambridge</p></div>
+        </a>
+        <a class="team-card" href="https://www.cics.umass.edu/about/directory/hao-zhang" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait"><img src="assets/team/hao-zhang.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Hao Zhang</h3><p>UMass Amherst</p></div>
+        </a>
+        <a class="team-card" href="https://www.umass.edu/robotics/people/donghyun-kim" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait donghyun-kim-portrait"><img src="assets/team/donghyun-kim.webp" alt="" width="512" height="456" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Donghyun Kim</h3><p>UMass Amherst</p></div>
+        </a>
+        <a class="team-card" href="https://staff.fnwi.uva.nl/a.visser/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait arnoud-visser-portrait"><img src="assets/team/arnoud-visser.webp" alt="" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Arnoud Visser</h3><p>University of Amsterdam</p></div>
+        </a>
+        <a class="team-card" href="https://www.egavves.com/" target="_blank" rel="noopener noreferrer">
+          <div class="team-portrait stratis-gavves-portrait"><img src="assets/team/stratis-gavves.webp" alt="" width="512" height="458" loading="lazy" decoding="async"></div>
+          <div class="team-card-copy"><h3>Stratis Gavves</h3><p>University of Amsterdam</p></div>
+        </a>
+      </div>
+
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-top"><a class="site-brand" href="#top" aria-label="Gamma Zero home"><span class="gamma-mark" aria-hidden="true"><span class="gamma-letter">γ</span><sub>0</sub></span><span class="brand-name">GAMMA ZERO</span></a><p>A generalist policy for<br>multi-embodiment motion control.</p><a class="footer-cta" href="https://play.gamma-zero.com/" target="_blank" rel="noopener noreferrer">Take it for a walk <span aria-hidden="true">↗</span></a></div>
+    <div class="footer-bottom"><span>Many robots. One policy.</span><div><a href="mailto:contribute@gamma-zero.com">Get in touch <span aria-hidden="true">↗</span></a><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div></div>
+  </footer>
+</body>
+</html>
